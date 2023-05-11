@@ -1,8 +1,15 @@
 import csv
 import codecs
 from tqdm import tqdm
+
 class Node:
-    def __init__(self, node_id:str, name:str, node_type:str, industry:str):
+    def __init__(self, node_id: str, name: str, node_type: str, industry: str):
+        """
+        :param node_id:
+        :param name:
+        :param node_type:
+        :param industry:
+        """
 
         self.id = node_id
         self.name = name
@@ -10,14 +17,15 @@ class Node:
         my_industry = industry.replace("[", "").replace("]", "").replace(",", "").replace("'", "").replace(" ", "")
 
         self.industry = my_industry
-        self.in_nodes = [] #save indices
-        self.out_nodes = [] #save indices
+        self.marked = 0  # 0 not marked;1 marked
+        self.in_nodes = []  # save indices
+        self.out_nodes = []  # save indices
 
-    def add_in_node(self, name:str, link_type:str):
-        self.in_nodes.append((name, link_type))
+    def add_in_node(self, next_id: str, link_type: str):
+        self.in_nodes.append((next_id, link_type))
 
-    def add_out_node(self, name:str, link_type:str):
-        self.out_nodes.append((name, link_type))
+    def add_out_node(self, next_id: str, link_type: str):
+        self.out_nodes.append((next_id, link_type))
 
 
 if __name__ == "__main__":
@@ -25,7 +33,7 @@ if __name__ == "__main__":
     with codecs.open("./Node.csv", encoding="utf-8-sig") as node_file:
         for row in csv.DictReader(node_file, skipinitialspace=True):
             node = Node(row["id"], row["name"], row["type"], row["industry"])
-            node_dict[row["name"] ] = node
+            node_dict[row["id"] ] = node
     node_file.close()
 
     print("Finish loading nodes")
@@ -44,6 +52,10 @@ if __name__ == "__main__":
                 target_node.add_out_node(source, link_type)
 
     print("Finish loading links")
+
+    #BFS
+    for key, node in node_dict:
+        pass
 
 
 
