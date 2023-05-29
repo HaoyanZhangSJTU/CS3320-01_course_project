@@ -30,7 +30,7 @@ def compute_all_centrality_measures(graph):
     betweenness_centralities = nx.betweenness_centrality(graph)
     
     # Eigenvector centrality
-    eigenvector_centralities = nx.eigenvector_centrality(graph)
+    eigenvector_centralities = nx.eigenvector_centrality(graph, max_iter=1000)
     
     # PageRank
     pageranks = nx.pagerank(graph)
